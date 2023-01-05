@@ -6,3 +6,9 @@ name VARCHAR(45) DEFAULT NULL,
 salary INT(5) DEFAULT NULL,
 PRIMARY KEY(id)
 );
+
+INSERT INTO employees VALUES 
+(DEFAULT,"Joe", 1000),
+(DEFAULT,"Henry", 2000),
+(DEFAULT,"Sam", 2500),
+(DEFAULT,"Max", 1500),
