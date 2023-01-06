@@ -12,7 +12,7 @@ export const getEmployee = async (req, res) => {
     [id]
   );
   if (rows.length <= 0) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Employee not found",
     });
   }
@@ -34,4 +34,16 @@ export const createEmployee = async (req, res) => {
 
 export const updateEmployee = (req, res) => res.send("actualizando empleados");
 
-export const deteleEmployee = (req, res) => res.send("eliminando empleados");
+export const deteleEmployee = async (req, res) => {
+  const { id } = req.params;
+  const [result] = await pool.query(
+    "DELETE FROM companydb.employees WHERE employees.id = ?",
+    [id]
+  );
+  if (result.affectedRows <= 0) {
+    return res.status(404).json({
+      message: "Employee not found",
+    });
+  }
+  res.sendStatus(204);
+};
