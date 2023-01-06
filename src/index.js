@@ -8,7 +8,7 @@ const PORT = 3000;
 app.use(express.json());
 
 app.use(inedexRoutes);
-app.use(employeesRoutes);
+app.use("/api", employeesRoutes);
 
 app.listen(PORT);
 
