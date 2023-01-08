@@ -1,8 +1,9 @@
 import { pool } from "../db.js";
+import { DB_DATABASE } from "../config.js";
 
 export const getEmployees = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM companydb.employees");
+    const [rows] = await pool.query(`SELECT * FROM ${DB_DATABASE}employees`);
     res.send(rows);
   } catch (error) {
     return res.status(500).json({
@@ -15,7 +16,7 @@ export const getEmployee = async (req, res) => {
   const { id } = req.params;
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM companydb.employees WHERE employees.id = ?",
+      `SELECT * FROM ${DB_DATABASE}.employees WHERE employees.id = ?`,
       [id]
     );
     if (rows.length <= 0) {
@@ -55,7 +56,7 @@ export const updateEmployee = async (req, res) => {
   const { name, salary } = req.body;
   try {
     const [result] = await pool.query(
-      "UPDATE companydb.employees SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE employees.id = ?",
+      `UPDATE ${DB_DATABASE}.employees SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE employees.id = ?`,
       [name, salary, id]
     );
     if (result.length <= 0) {
@@ -64,7 +65,7 @@ export const updateEmployee = async (req, res) => {
       });
     }
     const [rows] = await pool.query(
-      "SELECT * FROM companydb.employees WHERE employees.id = ?",
+      `SELECT * FROM ${DB_DATABASE}.employees WHERE employees.id = ?`,
       [id]
     );
     return res.json(rows[0]);
@@ -79,7 +80,7 @@ export const deteleEmployee = async (req, res) => {
   const { id } = req.params;
   try {
     const [result] = await pool.query(
-      "DELETE FROM companydb.employees WHERE employees.id = ?",
+      `DELETE FROM companydb.employees WHERE employees.id = ?`,
       [id]
     );
     if (result.affectedRows <= 0) {
